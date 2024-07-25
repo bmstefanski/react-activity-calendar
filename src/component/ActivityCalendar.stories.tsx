@@ -1,22 +1,15 @@
-import { Tooltip as MuiTooltip } from '@mui/material';
 import LinkTo from '@storybook/addon-links/react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Highlight, themes as prismThemes } from 'prism-react-renderer';
-import { cloneElement } from 'react';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useDarkMode } from 'storybook-dark-mode';
 
 import Container from '../../.storybook/components/Container';
 import exampleCustomization from '../../examples/customization?raw';
-import exampleEventHandlersInterface from '../../examples/event-handlers-type?raw';
-import exampleEventHandlers from '../../examples/event-handlers?raw';
 import exampleLabelsShape from '../../examples/labels-shape?raw';
 import exampleLabels from '../../examples/labels?raw';
 import exampleThemeExplicit from '../../examples/themes-explicit?raw';
 import exampleTheme from '../../examples/themes?raw';
-import exampleTooltipsMui from '../../examples/tooltips-mui?raw';
-import exampleTooltipsReact from '../../examples/tooltips-react?raw';
 import type { Theme } from '../types';
 import { generateTestData } from '../utils/calendar';
 import ActivityCalendar, { type Props } from './ActivityCalendar';
@@ -95,7 +88,6 @@ const defaultProps = {
   hideTotalCount: false,
   loading: false,
   maxLevel: 4,
-  showWeekdayLabels: false,
   weekStart: 0, // Sunday
 } satisfies Omit<Props, 'data'>;
 
@@ -346,102 +338,6 @@ export const Customization: Story = {
   },
 };
 
-export const EventHandlers: Story = {
-  args: {
-    ...defaultProps,
-    eventHandlers: {
-      onClick: () => activity => {
-        alert(JSON.stringify(activity));
-      },
-      onMouseEnter: () => () => {
-        console.log('on mouse enter');
-      },
-    },
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: exampleEventHandlers,
-      },
-    },
-  },
-  render: args => (
-    <Container>
-      <h1>Event Handlers</h1>
-      <p>
-        You can register event handlers for the SVG <code>&lt;rect/&gt;</code> elements that are
-        used to render the calendar days. This way you can control the behaviour on click, hover,
-        etc. All event listeners have the following signature, so you can use the activity data of
-        the block inside the handler:
-      </p>
-      <Source code={exampleEventHandlersInterface} isDarkMode={useDarkMode()} />
-      <p>Click on any block below to see it in action:</p>
-      <ActivityCalendar
-        {...args}
-        data={generateTestData({ maxLevel: args.maxLevel })}
-        style={{ margin: '2rem 0' }}
-      />
-      <Source code={exampleEventHandlers} isDarkMode={useDarkMode()} />
-    </Container>
-  ),
-};
-
-export const Tooltips: Story = {
-  args: defaultProps,
-  parameters: {
-    docs: {
-      source: {
-        code: exampleTooltipsReact,
-      },
-    },
-  },
-  render: args => (
-    <Container>
-      <h1>Tooltip Examples</h1>
-      <p>
-        To add a 3rd party tooltip component to the calendar you can use the{' '}
-        <code>renderBlock</code> prop.
-      </p>
-      <h2>
-        <a href="https://mui.com/material-ui/react-tooltip/">Material UI</a>
-      </h2>
-      <p>
-        In the simplest case, each block only needs to be wrapped with a{' '}
-        <code>&lt;Tooltip/&gt;</code> component, as shown here for Material UI:
-      </p>
-      <Source code={exampleTooltipsMui} isDarkMode={useDarkMode()} />
-      <ActivityCalendar
-        {...args}
-        data={generateTestData({ maxLevel: args.maxLevel })}
-        renderBlock={(block, activity) => (
-          <MuiTooltip title={`${activity.count} activities on ${activity.date}`}>
-            {block}
-          </MuiTooltip>
-        )}
-      />
-      <h2>
-        <a href="https://github.com/ReactTooltip/react-tooltip">react-tooltip</a>
-      </h2>
-      <p>
-        Some libraries, like <code>react-tooltip</code>, require that additional props are passed to
-        the block elements. You can achieve this using the <code>React.cloneElement</code> function:
-      </p>
-      <Source code={exampleTooltipsReact} isDarkMode={useDarkMode()} />
-      <ActivityCalendar
-        {...args}
-        data={generateTestData({ maxLevel: args.maxLevel })}
-        renderBlock={(block, activity) =>
-          cloneElement(block, {
-            'data-tooltip-id': 'react-tooltip',
-            'data-tooltip-html': `${activity.count} activities on ${activity.date}`,
-          })
-        }
-      />
-      <ReactTooltip id="react-tooltip" />
-    </Container>
-  ),
-};
-
 export const WithoutLabels: Story = {
   args: {
     ...defaultProps,
@@ -461,27 +357,9 @@ export const WithoutLabels: Story = {
   },
 };
 
-export const WeekdayLabels: Story = {
-  args: {
-    ...defaultProps,
-    showWeekdayLabels: true,
-  },
-  render: args => (
-    <ActivityCalendar {...args} data={generateTestData({ maxLevel: args.maxLevel })} />
-  ),
-  parameters: {
-    docs: {
-      source: {
-        code: '<ActivityCalendar data={data} showWeekdayLabels />',
-      },
-    },
-  },
-};
-
 export const LocalizedLabels: Story = {
   args: {
     ...defaultProps,
-    showWeekdayLabels: true,
     labels: {
       months: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
       weekdays: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],

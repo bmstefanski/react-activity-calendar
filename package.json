@@ -1,8 +1,8 @@
 {
-  "name": "react-activity-calendar",
-  "version": "2.2.11",
-  "description": "React component to display activity data in calendar",
-  "author": "Jonathan Gruber <gruberjonathan@gmail.com>",
+  "name": "rsc-activity-calendar",
+  "version": "1.0.0",
+  "description": "RSC to display activity data in calendar",
+  "author": "Jonathan Gruber <gruberjonathan@gmail.com> (fork by Bart Stefanski <contact@bstefanski.com>)",
   "license": "MIT",
   "homepage": "https://grubersjoe.github.io/react-activity-calendar/",
   "repository": "grubersjoe/react-activity-calendar",
@@ -24,12 +24,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/chroma-js": "^2.4.3",
     "chroma-js": "^2.4.2",
-    "date-fns": "^3.6.0",
-    "prism-react-renderer": "^2.3.1"
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
+    "@types/chroma-js": "^2.4.3",
+    "prism-react-renderer": "^2.3.1",
     "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
@@ -74,6 +74,7 @@
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.77.8",
     "storybook": "^8.1.10",
     "storybook-dark-mode": "^4.0.2",
     "typescript": "^5.5.2",
